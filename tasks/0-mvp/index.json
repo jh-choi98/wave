@@ -1,0 +1,19 @@
+{
+  "project": "wave",
+  "task": "mvp",
+  "prompt": "plan-and-build skill 사용해서 이 서비스의 mvp를 전부 구현하자.",
+  "totalPhases": 11,
+  "phases": [
+    { "phase": 0, "name": "docs-update", "status": "pending" },
+    { "phase": 1, "name": "project-scaffold", "status": "pending" },
+    { "phase": 2, "name": "database", "status": "pending" },
+    { "phase": 3, "name": "auth", "status": "pending" },
+    { "phase": 4, "name": "bible-data", "status": "pending" },
+    { "phase": 5, "name": "server-actions", "status": "pending" },
+    { "phase": 6, "name": "main-layout", "status": "pending" },
+    { "phase": 7, "name": "home-components", "status": "pending" },
+    { "phase": 8, "name": "passage-selector", "status": "pending" },
+    { "phase": 9, "name": "records", "status": "pending" },
+    { "phase": 10, "name": "polish", "status": "pending" }
+  ]
+}
