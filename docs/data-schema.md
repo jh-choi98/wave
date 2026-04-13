@@ -56,6 +56,7 @@ CREATE TABLE bible_cache (
 - `verses` format: `[{"verse": 1, "text": "태초에 하나님이..."}, ...]`
 - No TTL. Bible text doesn't change. Cache is permanent.
 - Purpose: eliminate scripture.api.bible dependency after first fetch (5,000 req/month free limit).
+- **MVP note**: MVP uses a `MockBibleClient` (see ADR-015), so seed rows can be inserted directly into this table during development. When the real API is wired up, the cache-first pattern above takes over unchanged.
 
 ## Key Queries
 
