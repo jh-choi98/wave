@@ -7,8 +7,7 @@ import { getTodayMeditation, getLastMeditation } from '@/actions/meditation'
 import { getChapter } from '@/actions/bible'
 import { getNextChapter, getChapterByDayOffset } from '@/lib/bible/plan'
 import { Header } from '@/components/Header'
-import { BiblePassage } from '@/components/BiblePassage'
-import { MeditationEditor } from '@/components/MeditationEditor'
+import { HomeClient } from '@/components/HomeClient'
 import { OnboardingBanner } from '@/components/OnboardingBanner'
 
 function getKSTDateKey(date: Date): string {
@@ -86,14 +85,14 @@ export default async function HomePage() {
         userImage={session.user.image}
       />
       <OnboardingBanner />
-      <BiblePassage book={book} chapter={chapter} verses={verses} />
-      <MeditationEditor
-        book={book}
-        chapter={chapter}
+      <HomeClient
+        initialBook={book}
+        initialChapter={chapter}
+        initialVerses={verses}
         initialContent={today?.content ?? ''}
-        isCompleted={!!today}
+        hasSavedToday={!!today}
         userId={userId}
-        date={dateKey}
+        dateKey={dateKey}
       />
     </div>
   )
