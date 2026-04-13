@@ -9,6 +9,12 @@ import { getNextChapter, getChapterByDayOffset } from '@/lib/bible/plan'
 import { Header } from '@/components/Header'
 import { BiblePassage } from '@/components/BiblePassage'
 import { MeditationEditor } from '@/components/MeditationEditor'
+import { OnboardingBanner } from '@/components/OnboardingBanner'
+
+function getKSTDateKey(date: Date): string {
+  // YYYY-MM-DD in Asia/Seoul
+  return date.toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' })
+}
 
 function formatKSTDate(date: Date): string {
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -67,7 +73,9 @@ export default async function HomePage() {
   }
 
   const verses = await getChapter(book, chapter)
-  const dateLabel = formatKSTDate(new Date())
+  const now = new Date()
+  const dateLabel = formatKSTDate(now)
+  const dateKey = getKSTDateKey(now)
 
   return (
     <div className="flex h-[100dvh] flex-col pb-16">
@@ -77,12 +85,15 @@ export default async function HomePage() {
         userName={session.user.name}
         userImage={session.user.image}
       />
+      <OnboardingBanner />
       <BiblePassage book={book} chapter={chapter} verses={verses} />
       <MeditationEditor
         book={book}
         chapter={chapter}
         initialContent={today?.content ?? ''}
-        hasSaved={!!today}
+        isCompleted={!!today}
+        userId={userId}
+        date={dateKey}
       />
     </div>
   )

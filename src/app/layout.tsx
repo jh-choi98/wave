@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
 const pretendard = localFont({
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" className={pretendard.variable}>
       <body className="font-sans antialiased">
         {children}
+        <Toaster />
       </body>
     </html>
   )

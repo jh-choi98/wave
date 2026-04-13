@@ -56,7 +56,9 @@
     {
       "phase": 7,
       "name": "home-components",
-      "status": "pending"
+      "status": "completed",
+      "started_at": "2026-04-13T14:12:51+0900",
+      "completed_at": "2026-04-13T14:16:00+0900"
     },
     {
       "phase": 8,
