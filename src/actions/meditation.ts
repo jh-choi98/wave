@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { meditations } from '@/lib/db/schema'
-import { validateMeditationInput } from '@/lib/validators'
+import { MAX_CONTENT_LENGTH, validateMeditationInput } from '@/lib/validators'
 
 export type Meditation = typeof meditations.$inferSelect
 
@@ -91,6 +91,46 @@ export async function getLastMeditation(): Promise<{ book: string; chapter: numb
     .limit(1)
 
   return rows[0] ?? null
+}
+
+export async function updateMeditation(
+  id: string,
+  content: string
+): Promise<{ success: boolean; error?: string }> {
+  const session = await auth()
+  if (!session?.user?.id) {
+    return { success: false, error: 'Unauthorized' }
+  }
+
+  if (content.trim().length === 0) {
+    return { success: false, error: '묵상 내용을 입력해주세요.' }
+  }
+  if (content.length > MAX_CONTENT_LENGTH) {
+    return {
+      success: false,
+      error: `묵상 내용은 ${MAX_CONTENT_LENGTH}자를 초과할 수 없습니다.`,
+    }
+  }
+
+  try {
+    const result = await db
+      .update(meditations)
+      .set({ content, updatedAt: new Date() })
+      .where(and(eq(meditations.id, id), eq(meditations.userId, session.user.id)))
+      .returning({ id: meditations.id })
+
+    if (result.length === 0) {
+      return { success: false, error: '수정할 기록을 찾을 수 없습니다.' }
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : '수정에 실패했습니다.',
+    }
+  }
+
+  revalidatePath('/records')
+  return { success: true }
 }
 
 export async function getMeditationRecords(): Promise<Meditation[]> {
