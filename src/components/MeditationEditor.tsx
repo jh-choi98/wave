@@ -74,6 +74,12 @@ export function MeditationEditor({
       <Textarea
         value={content}
         onChange={handleChange}
+        onFocus={(e) => {
+          // On mobile, scroll the textarea into view when the keyboard opens.
+          setTimeout(() => {
+            e.target.scrollIntoView({ block: 'center', behavior: 'smooth' })
+          }, 300)
+        }}
         placeholder="오늘의 묵상을 적어보세요"
         className="min-h-24 resize-none"
         disabled={isPending}
