@@ -65,7 +65,7 @@ export function PassageSelector({
       </SheetTrigger>
       <SheetContent
         side="bottom"
-        className="flex h-[80dvh] flex-col gap-0 p-0"
+        className="flex !h-[80dvh] flex-col gap-0 p-0"
         showCloseButton={false}
       >
         {selectedBook ? (
@@ -128,7 +128,7 @@ export function PassageSelector({
               </div>
               <TabsContent
                 value="old"
-                className="flex-1 overflow-y-auto px-2 py-2"
+                className="mt-0 min-h-0 flex-1 overflow-y-auto px-2 py-2"
               >
                 <BookList
                   books={OLD_TESTAMENT}
@@ -138,7 +138,7 @@ export function PassageSelector({
               </TabsContent>
               <TabsContent
                 value="new"
-                className="flex-1 overflow-y-auto px-2 py-2"
+                className="mt-0 min-h-0 flex-1 overflow-y-auto px-2 py-2"
               >
                 <BookList
                   books={NEW_TESTAMENT}

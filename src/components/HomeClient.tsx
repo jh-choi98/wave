@@ -6,6 +6,7 @@ import { getChapter } from '@/actions/bible'
 import { BiblePassage } from '@/components/BiblePassage'
 import { MeditationEditor } from '@/components/MeditationEditor'
 import { PassageSelector } from '@/components/PassageSelector'
+import { getNextChapter, getPrevChapter } from '@/lib/bible/plan'
 import type { Verse } from '@/lib/bible/client'
 
 export type HomeClientProps = {
@@ -52,6 +53,15 @@ export function HomeClient({
         book={book}
         chapter={chapter}
         verses={verses}
+        isPending={isPending}
+        onPrev={() => {
+          const prev = getPrevChapter(book, chapter)
+          handleSelect(prev.book, prev.chapter)
+        }}
+        onNext={() => {
+          const next = getNextChapter(book, chapter)
+          handleSelect(next.book, next.chapter)
+        }}
         action={
           <PassageSelector
             currentBook={book}
@@ -60,9 +70,6 @@ export function HomeClient({
           />
         }
       />
-      {isPending && (
-        <div className="px-4 pb-1 text-xs text-muted-foreground">본문 불러오는 중…</div>
-      )}
       <MeditationEditor
         book={book}
         chapter={chapter}

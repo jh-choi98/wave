@@ -25,6 +25,17 @@ function getChapterByIndex(index: number): { book: string; chapter: number } {
   return { book: BIBLE_BOOKS[0].name, chapter: 1 }
 }
 
+export function getPrevChapter(
+  book: string,
+  chapter: number
+): { book: string; chapter: number } {
+  const idx = getChapterIndex(book, chapter)
+  if (idx === -1) {
+    throw new Error(`Invalid book/chapter: ${book} ${chapter}`)
+  }
+  return getChapterByIndex(idx - 1)
+}
+
 export function getNextChapter(
   lastBook: string,
   lastChapter: number
