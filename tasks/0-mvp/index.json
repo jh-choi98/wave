@@ -4,16 +4,84 @@
   "prompt": "plan-and-build skill 사용해서 이 서비스의 mvp를 전부 구현하자.",
   "totalPhases": 11,
   "phases": [
-    { "phase": 0, "name": "docs-update", "status": "pending" },
-    { "phase": 1, "name": "project-scaffold", "status": "pending" },
-    { "phase": 2, "name": "database", "status": "pending" },
-    { "phase": 3, "name": "auth", "status": "pending" },
-    { "phase": 4, "name": "bible-data", "status": "pending" },
-    { "phase": 5, "name": "server-actions", "status": "pending" },
-    { "phase": 6, "name": "main-layout", "status": "pending" },
-    { "phase": 7, "name": "home-components", "status": "pending" },
-    { "phase": 8, "name": "passage-selector", "status": "pending" },
-    { "phase": 9, "name": "records", "status": "pending" },
-    { "phase": 10, "name": "polish", "status": "pending" }
-  ]
+    {
+      "phase": 0,
+      "name": "docs-update",
+      "status": "completed",
+      "started_at": "2026-04-13T13:59:22+0900",
+      "completed_at": "2026-04-13T14:00:44+0900"
+    },
+    {
+      "phase": 1,
+      "name": "project-scaffold",
+      "status": "completed",
+      "started_at": "2026-04-13T14:00:45+0900",
+      "completed_at": "2026-04-13T14:04:22+0900"
+    },
+    {
+      "phase": 2,
+      "name": "database",
+      "status": "completed",
+      "started_at": "2026-04-13T14:04:22+0900",
+      "completed_at": "2026-04-13T14:05:28+0900"
+    },
+    {
+      "phase": 3,
+      "name": "auth",
+      "status": "completed",
+      "started_at": "2026-04-13T14:05:28+0900",
+      "completed_at": "2026-04-13T14:06:58+0900"
+    },
+    {
+      "phase": 4,
+      "name": "bible-data",
+      "status": "completed",
+      "started_at": "2026-04-13T14:06:58+0900",
+      "completed_at": "2026-04-13T14:09:10+0900"
+    },
+    {
+      "phase": 5,
+      "name": "server-actions",
+      "status": "completed",
+      "started_at": "2026-04-13T14:09:10+0900",
+      "completed_at": "2026-04-13T14:10:33+0900"
+    },
+    {
+      "phase": 6,
+      "name": "main-layout",
+      "status": "completed",
+      "started_at": "2026-04-13T14:10:33+0900",
+      "completed_at": "2026-04-13T14:12:51+0900"
+    },
+    {
+      "phase": 7,
+      "name": "home-components",
+      "status": "completed",
+      "started_at": "2026-04-13T14:12:51+0900",
+      "completed_at": "2026-04-13T14:15:53+0900"
+    },
+    {
+      "phase": 8,
+      "name": "passage-selector",
+      "status": "completed",
+      "started_at": "2026-04-13T14:15:53+0900",
+      "completed_at": "2026-04-13T14:18:40+0900"
+    },
+    {
+      "phase": 9,
+      "name": "records",
+      "status": "completed",
+      "started_at": "2026-04-13T14:18:40+0900",
+      "completed_at": "2026-04-13T14:20:21+0900"
+    },
+    {
+      "phase": 10,
+      "name": "polish",
+      "status": "completed",
+      "started_at": "2026-04-13T14:20:21+0900",
+      "completed_at": "2026-04-13T14:22:29+0900"
+    }
+  ],
+  "created_at": "2026-04-13T13:59:22+0900",
+  "completed_at": "2026-04-13T14:22:30+0900"
 }

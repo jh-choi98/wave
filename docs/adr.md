@@ -101,3 +101,23 @@ Fast MVP launch for YC. Minimize complexity. Ship only what's needed. No specula
 **Decision**: Records tab expands items inline. No separate detail screen.
 
 **Why**: Two-screen constraint (home + records). Detail page would be a third screen. Inline expansion keeps context — user sees the list while reading a specific entry. Edit mode via explicit [수정] button prevents accidental edits.
+
+## ADR-015: Mock Bible Data for Development
+
+**Decision**: During development, use mock/static JSON instead of scripture.api.bible. `lib/bible/client.ts` is defined as an interface (`BibleClient`) with a `MockBibleClient` implementation for dev and a future `ApiBibleClient` implementation for production.
+
+**Why**: scripture.api.bible key issuance and Korean 개역개정 availability are unverified. Mock data lets us complete the full flow (login → passage → meditation → records) first and defer real API integration to a separate task.
+
+**Trade-off**: Developing without real data means the real API response shape may differ. The interface abstraction minimizes this risk — swapping implementations should not touch callers.
+
+## ADR-016: PostHog/Sentry Deferred
+
+**Decision**: PostHog and Sentry are excluded from the MVP task. They will be added as a separate task after the core flow (login → passage → meditation → records) is complete.
+
+**Why**: More phases mean longer runs and higher failure probability. Observability can be attached after the core feature works — it does not need to block first launch.
+
+## ADR-017: Runtime-Only Env Validation
+
+**Decision**: Environment variables are validated only at runtime. No build-time checks.
+
+**Why**: CI/CD and phase-level AC checks (`npm run build`, `npm test`) must pass without real DB/OAuth credentials. `lib/env.ts` is invoked on runtime startup; if a required variable is missing, it throws immediately. Build never touches the validator.

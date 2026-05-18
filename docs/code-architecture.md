@@ -4,6 +4,8 @@
 
 Next.js (App Router) · Auth.js v5 · Supabase PostgreSQL · Drizzle ORM · Tailwind + shadcn/ui · Vercel
 
+> Observability (PostHog, Sentry) is **deferred to a separate task** after MVP. See ADR-016.
+
 ## Project Structure
 
 ```
@@ -18,7 +20,7 @@ Next.js (App Router) · Auth.js v5 · Supabase PostgreSQL · Drizzle ORM · Tail
 └── src/
     ├── middleware.ts                     # auth guard
     ├── app/
-    │   ├── layout.tsx                   # root: Pretendard, PostHog, Sentry
+    │   ├── layout.tsx                   # root: Pretendard + <html lang="ko">
     │   ├── (auth)/login/page.tsx        # landing page
     │   ├── (main)/
     │   │   ├── layout.tsx               # tab bar (home / records)
@@ -51,7 +53,7 @@ Next.js (App Router) · Auth.js v5 · Supabase PostgreSQL · Drizzle ORM · Tail
     │   │   ├── schema.ts               # Drizzle table definitions
     │   │   └── index.ts                # singleton client (pooled)
     │   ├── bible/
-    │   │   ├── client.ts               # scripture.api.bible (server-only)
+    │   │   ├── client.ts               # BibleClient interface + Mock/Api impls (server-only)
     │   │   ├── plan.ts                 # next chapter calculation
     │   │   └── books.ts                # 66-book validation constants
     │   ├── auth.ts                     # Auth.js config (JWT strategy)
@@ -99,14 +101,19 @@ Every Server Action must:
 
 ## Bible Data Flow
 
+`lib/bible/client.ts` defines a `BibleClient` interface with two implementations:
+
+- **`MockBibleClient`** (dev / MVP): returns static JSON for any book/chapter.
+- **`ApiBibleClient`** (prod, future): fetches from scripture.api.bible. Not implemented in MVP — see ADR-015.
+
 ```
 Client requests chapter
   → Server Action: check bible_cache
     → cache hit → return verses
-    → cache miss → fetch scripture.api.bible → store in bible_cache → return
+    → cache miss → BibleClient.getChapter(book, chapter) → store in bible_cache → return
 ```
 
-`lib/bible/client.ts` uses `import 'server-only'` to prevent API key leakage.
+The module uses `import 'server-only'` to prevent any future API key leakage. Swapping implementations is a single-line change at the factory.
 
 ## Caching & Revalidation
 
@@ -121,16 +128,11 @@ Client requests chapter
 NEXTAUTH_SECRET, NEXTAUTH_URL
 GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
 DATABASE_URL                    # pooled connection, port 6543
-SCRIPTURE_API_KEY
-SENTRY_DSN
+SCRIPTURE_API_KEY               # unused in MVP (MockBibleClient); required for ApiBibleClient
 CRON_SECRET
-
-# Public (client-safe)
-NEXT_PUBLIC_POSTHOG_KEY
-NEXT_PUBLIC_POSTHOG_HOST
 ```
 
-Validated at startup in `lib/env.ts`. Missing required vars → throw immediately.
+Validated at runtime only in `lib/env.ts`. Missing required vars → throw immediately on server startup. Build time does not invoke the validator (see ADR-017), so `npm run build` and tests pass without real credentials.
 
 ## next.config.ts
 
